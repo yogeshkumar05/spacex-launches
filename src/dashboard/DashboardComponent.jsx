@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react';
+import DashboardTile from './DashboardTile';
 
 export default class DashboardComponent extends Component {
   constructor(props) {
@@ -16,6 +17,10 @@ export default class DashboardComponent extends Component {
     return (
       <div className='App'>
         <h1>SpaceX Launches</h1>
+        {
+          launches.map(launch => <DashboardTile launchData={launch}/>)
+        }
+        
       </div>
     );
   }
