@@ -1,31 +1,58 @@
 
 import React, { Component } from 'react';
 import DashboardTile from './DashboardTile';
-
+import SearchBar from '../components/HeaderSearch';
+import DisplayCount from '../components/DisplayCount';
+import Loader from '../components/Loader';
+import PropTypes from 'prop-types';
 export default class DashboardComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
+
   componentDidMount() {
     this.props.getLaunchData();
   }
+
+  handleSearchChange = (e) => {
+    this.props.getFilteredData(e.target.value);
+  }
+
   render() {
     const {
-      launches
+      filteredLaunches,
+      launches,
+      isLoading
     } = this.props;
-    console.log('launches', launches)
+
     return (
       <div className='App'>
-        <h1>SpaceX Launches</h1>
+        <SearchBar onSearchChanged={this.handleSearchChange} />
+        <div className='app-container'>
         {
-          launches.map(launch => <DashboardTile launchData={launch}/>)
+          isLoading ? <Loader /> :
+            <>
+              <DisplayCount total={launches.length} filtered={filteredLaunches.length} />
+              {
+                filteredLaunches.map(launch => <DashboardTile launchData={launch} key={launch.mission_name}/>)
+              }
+            </>
         }
-        
+        </div>
       </div>
     );
   }
 }
 
+DashboardComponent.propTypes = {
+  filteredLaunches: PropTypes.array,
+  launches: PropTypes.array,
+  isLoading: PropTypes.bool,
+  getLaunchData: PropTypes.func,
+  getFilteredData: PropTypes.func
+};
+DashboardComponent.defaultProps = {
+  filteredLaunches: [],
+  launches: [],
+  isLoading: true,
+  getLaunchData: () => {},
+  getFilteredData: () => {},
+}
 
-
-// export default App;

@@ -1,22 +1,28 @@
 import { connect } from 'react-redux';
-import { getLaunches } from './duck/operations';
+import { 
+  getLaunches,
+  getFilteredLaunches
+} from './duck/operations';
 import DashboardComponent from './DashboardComponent';
 
 const mapStateToProps = (state) => {
   const {
-    count,
-    launches
+    launches,
+    filteredLaunches,
+    isLoading
   } = state.dashoard;
 
   return {
-    count,
-    launches
+    launches,
+    filteredLaunches,
+    isLoading
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getLaunchData: () => dispatch(getLaunches())
+    getLaunchData: _ => dispatch(getLaunches()),
+    getFilteredData: searchKey => dispatch(getFilteredLaunches(searchKey))
   }
 }
 

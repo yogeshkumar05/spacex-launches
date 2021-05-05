@@ -1,5 +1,6 @@
 import {
-  fetchLaunchData
+  fetchLaunchData,
+  filterLaunchData
 } from './reduxSlice';
 
 export const getLaunches = () => (dispatch) => {
@@ -10,4 +11,14 @@ export const getLaunches = () => (dispatch) => {
       console.error(error);
     });
 };
+
+export const getFilteredLaunches = (searchKey) => (dispatch, getState) => {
+  const {
+    dashoard: {
+      launches
+    }
+  } = getState();
+
+  dispatch(filterLaunchData({ data: launches, key: searchKey }));
+}
 

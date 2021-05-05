@@ -9,7 +9,7 @@ import {
   cardStyles
 } from './styles';
 
-function DashboardTile(props) {
+export default function DashboardTile(props) {
   const {
     launchData: {
       flight_number,
@@ -17,6 +17,9 @@ function DashboardTile(props) {
       launch_date_unix,
       launch_success,
       mission_name,
+      rocket: {
+        rocket_name
+      },
       links: {
         flickr_images
       }
@@ -27,12 +30,12 @@ function DashboardTile(props) {
     FLIGHT_NUMBER,
     LAUNCH_DATE,
     LAUNCH_STATUS,
+    ROCKET_NAME,
     DEFAULT_IMG_URL,
     SUCCESS,
     FAILURE
   } = constants
   const classes = cardStyles();
-
 
   let subHeader = <div>
     <div>
@@ -43,6 +46,9 @@ function DashboardTile(props) {
     </div>
     <div>
       {LAUNCH_STATUS}: {launch_success ? SUCCESS : FAILURE}
+    </div>
+    <div>
+      {ROCKET_NAME}: {rocket_name}
     </div>
   </div>;
 
@@ -68,4 +74,3 @@ function DashboardTile(props) {
   );
 }
 
-export default DashboardTile;
